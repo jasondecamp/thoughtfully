@@ -1,14 +1,13 @@
 import {
-  DefaultPage,
+  LandingPage,
 } from './';
 
 export default {
   path: '/',
-  name: 'Home',
+  name: 'Landing',
   childRoutes: [
-    { path: 'default-page',
-      name: 'Default page',
-      component: DefaultPage,
+    { name: 'Landing page',
+      component: LandingPage,
       isIndex: true,
     },
   ],

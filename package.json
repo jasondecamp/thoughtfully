@@ -36,6 +36,7 @@
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.5",
+    "mdbreact": "^4.6.1",
     "nock": "^9.2.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
@@ -72,7 +73,7 @@
     "devPort": 80,
     "studioPort": 81,
     "plugins": [],
-    "css": "less"
+    "css": "scss"
   },
   "jest": {
     "collectCoverageFrom": [

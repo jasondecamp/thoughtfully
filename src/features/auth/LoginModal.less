@@ -1,0 +1,55 @@
+@import '../../styles/mixins';
+
+.modal-login {
+  .modal-body {
+    overflow-y: auto;
+  }
+  .modal-header, .modal-footer {
+    flex: 0 0 auto;
+  }
+  .modal-footer {
+    padding: 0.5rem 1rem;    
+  }
+  .modal-title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .btn {
+    &.btn-primary, &.btn-white {
+      // social login buttons
+      font-family: 'roboto';
+      font-size: 12px;
+    }
+    .fa {
+      // social login icon
+      margin-right: 10px;
+    }
+  }
+  .forgot-password {
+    left: auto;
+    right: 0;
+    font-size: 12px;
+    z-index: 2;
+  }
+  .divider {
+    position: relative;
+    margin-bottom: 1.75rem;
+    margin-top: 2.5rem;
+    &:before {
+      content: '';
+      border-bottom: 1px solid #dedede;
+      position: absolute;
+      top: 50%;
+      left: 25%;
+      z-index: 0;
+      width: 50%;
+    }
+    span {
+      background: #fff;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+      color: #999;
+    }
+  }
+}

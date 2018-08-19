@@ -3,6 +3,9 @@ import { AppContainer } from 'react-hot-loader';
 import { render } from 'react-dom';
 import configStore from './common/configStore';
 import routeConfig from './common/routeConfig';
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 import Root from './Root';
 
 const store = configStore();

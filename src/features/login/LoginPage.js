@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-export class DefaultPage extends Component {
+export class LoginPage extends Component {
   static propTypes = {
     login: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -12,7 +12,7 @@ export class DefaultPage extends Component {
 
   render() {
     return (
-      <div className="login-default-page">
+      <div className="login-login-page">
         Page Content: login/DefaultPage
       </div>
     );
@@ -36,4 +36,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(LoginPage);
