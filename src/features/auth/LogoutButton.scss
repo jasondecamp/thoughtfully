@@ -1,0 +1,14 @@
+@import '../../styles/mixins';
+
+.logout-button {
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(255,255,255,0.2);
+  padding: 8px 20px;
+  border-radius: 4px;
+  &:hover {
+    opacity: 1.0;
+    background: rgba(255,255,255,0.3);
+  }
+}

@@ -1,0 +1,188 @@
+@import '../../styles/mixins';
+
+.app-content {
+  color: #fff;
+  .logout-button {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 10;
+  }
+  .helper, .hint, .greeting {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0;    
+  }
+  .greeting {
+    top: 5%;
+  }
+  .helper {
+    top: calc(5% + 50px);
+    transition: opacity 0.5s, visibility 0.5s;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+    &.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+  .hint {
+    font-size: 14px;
+    bottom: 5%;
+    transition: all 1.0s;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0,50px,0);
+    &.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate3d(0,0,0);
+    }
+  }
+}
+// Please change your favorite font-size!
+$fontSize: 48px;
+
+#thought {
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  width: calc(100% - 100px);
+  height: calc(100% - 100px);
+  .text, .thought-input {
+    font-size: $fontSize;
+    line-height: $fontSize;
+    font-family: 'roboto', cursive;
+    font-weight: 300;
+    mix-blend-mode: color-burn;
+    letter-spacing: 0.3rem;
+    text-align: center;
+    white-space: pre-wrap;
+    word-break: break-word;
+    transition: transform 0.5s, color 0.5s, filter 0.5s ease-in, opacity 0.5s;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+  .thought-input {
+    color: rgba(random(150) + 105, random(150) + 105, random(150) + 105, 0.5);
+    caret-color: #fff;
+    display: block;
+    width: 100%;
+    min-height: $fontSize + 6px;
+    background: transparent;
+    padding: 0;
+    margin-top: 6px;
+    border: none;
+    outline: none;
+    & + span {
+      opacity: 0;
+      transition: opacity 0.3s;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    &:not(:focus):empty + span {
+      transition: opacity 0.3s 0.5s;
+      opacity: 1;
+    }
+  }
+  .text, .form-row {
+    position: absolute;
+    transform: translate3d(-50%, -50%, 0);
+    overflow: visible;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    max-width: 800px;
+    &:before, &:after {
+      content: none;
+    }
+  }
+  .text {
+    @for $i from 0 through 79 {
+      $key: $i + 1;
+      &:nth-child(#{$key}) {
+        $row: floor($i / 20);
+        color: rgba(random(200) + 55, random(200) + 55, random(200) + 55, 1);
+        clip-path: polygon(
+          $i * 5% - $row * 100% - random(2) $row * 50% - random(5),
+          $key * 5% - $row * 100% + random(5) $row * 50% - random(30),
+          $key * 5% - $row * 100% + random(5) $row * 50% + 50% + random(5),
+          $i * 5% - $row * 100% - random(2) $row * 50% + 50% + random(30)
+        );
+        transform-origin: ($i + 0.5) * 5% - $row * 100% - 50% $row * 50% - 25%;
+        filter: blur(#{random(7) - 3}px);
+        .text_inner1 {
+          animation: vertical random(1000) + 700ms random(100) + 0ms ease-in-out infinite alternate;
+        }
+        .text_inner2 {
+          animation: horizontal random(1000) + 700ms random(100) + 0ms ease-in-out infinite alternate;
+        }
+      }
+    }
+  }
+  &.loading, &.clear {
+    .thought-input {
+      opacity: 0.3;
+    }
+    .text {
+      .text_inner1, .text_inner2 {
+        animation: none !important;
+      }
+      @for $i from 1 through 80 {
+        &:nth-child(#{$i}) {
+          @if random(2) > 1 {
+            animation: spin random(2000) + 1700ms linear 0ms infinite;
+          } @else {
+            animation: spin random(2000) + 1700ms linear 0ms infinite reverse;
+          }
+        }
+      }
+    }
+  }
+  &.clear {
+    .thought-input {
+      opacity: 0;
+      filter: blur(50px);
+      color: #fff !important;
+    }
+    .text {
+      opacity: 0;
+      filter: blur(50px);
+      color: #fff !important;
+      .text_inner1, .text_inner2 {
+        animation: none;
+      }
+    }
+  }
+}
+
+@keyframes horizontal {
+  0% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(-2px);
+  }
+}
+@keyframes vertical {
+  0% {
+    transform: translateY(1px);
+  }
+  100% {
+    transform: translateY(-1px);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) translate3d(-50%,-50%,0);
+  }
+  50% {
+    transform: rotate(180deg) translate3d(-50%,-50%,0);
+  }
+  100% {
+    transform: rotate(360deg) translate3d(-50%,-50%,0);
+  }
+}
+

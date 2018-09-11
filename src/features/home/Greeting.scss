@@ -1,0 +1,9 @@
+@import '../../styles/mixins';
+
+.greeting {
+  font-size: 28px;
+  font-family: 'Pacifico', cursive;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
+  display: block;
+}

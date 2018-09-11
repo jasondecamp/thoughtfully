@@ -1,0 +1,101 @@
+@import './mixins';
+
+// Here you put all global css rules.
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: 300;
+  background: #212121 url(../images/void-bg.jpg) center center / cover no-repeat;
+  color: white;
+  overflow: hidden;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+.modal-dialog {
+  color: #212121;
+  &.modal-full-height {
+    bottom: 0;
+  }
+}
+
+.btn {
+  line-height: 20px;
+  &.error {
+    animation: 0.1s linear 3 vibrate;
+  }
+}
+
+.btn-flat {
+  color: #666;
+  box-shadow: none;
+  &:hover {
+    color: #000;
+    box-shadow: none;
+  }
+}
+.purple-gradient {
+  background-color: #ff6ec4;
+  background: linear-gradient(40deg,#a53ff3,#7873f5,#ff6ec4);
+  background-size: 100% 400%;
+  color: white;
+  height: 48px;
+  padding: 0 30px;
+  letter-spacing: 0.5px;
+  transition: background-position 0.3s;
+  &:hover {
+    color: white;
+    background-position: 0 100%;
+  }
+}
+
+.md-form {
+  .form-control {
+    z-index: 1;
+    position: relative;
+    &:active, &:focus, &:valid {
+      & + label {
+        transform: translateY(-140%);
+        font-size: 0.8rem;
+      }
+    }
+    & + label {
+      z-index: 0;
+    }
+  }
+  .validate {
+    margin-bottom: 0.5rem;
+  }
+  .was-validated & {
+    input:invalid + label:after {
+      content: attr(data-error);
+      opacity: 1;
+      color: #cc0000;
+      position: relative;
+      top: 0;
+      display: inline;
+      margin-left: 5px;
+    }
+  }
+}
+@keyframes vibrate {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
