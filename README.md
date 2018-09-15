@@ -12,14 +12,14 @@
 - ~~Add new user registration~~
 - ~~Support email/username~~
 - ~~Figure out deployment to now~~
+- ~~Build thought input UI~~
 - ~~Add snackbar alerts for user feedback~~
 
 ## Work in progress
-- Build thought input UI
 - Clean-up signup/signin forms with loading and validation
+- Finish Serverside API (https://github.com/jasondecamp/thoughtfully-api)
 
 ## To do
-- Finish Serverside API (https://github.com/jasondecamp/thoughtfully-api)
 - Testing and debugging
 
 ### **---===> Launch v1.0**
@@ -31,3 +31,10 @@
   - Control email frequency
   - Delete previous data (for privacy or whatever)
   
+  
+## DEPLOY VIA NOW
+```
+$ npm run build
+$ cd build
+$ now --name thoughtfully --public
+$ now alias [clipboard] thoughtfully.app

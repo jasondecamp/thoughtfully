@@ -8,6 +8,22 @@ import Greeting from './Greeting'
 import LogoutButton from '../auth/LogoutButton';
 import Alerts from "../core/Alerts";
 
+const successMessages = [
+  'Sent to the void.',
+  'Thought archived.',
+  'Let it float away.',
+  'Forget the pain but never forget what it taught you.',
+  'Life moves on and so should we.',
+  'Courage is the power to let go of the familiar.',
+  'If there is no struggle, there is no progress.',
+  'What to the Slave is the 4th of July.',
+  'Let us render the tyrant no aid.',
+  'I would unite with anybody to do right; and with nobody to do wrong.',
+  'You are not judged by the height you have risen, but from the depth you have climbed.',
+  'Once you learn to read, you will be forever free.',
+  'I prefer to be true to myself, even at the hazard of incurring the ridicule of others, rather than to be false, and to incur my own abhorrence.',
+];
+
 class Dashboard extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
@@ -44,7 +60,7 @@ class Dashboard extends Component {
           this.textarea.focus();
         }, 700);
         this.props.alert.show({
-          message: 'Saved!'
+          message: successMessages[Math.floor(Math.random() * successMessages.length)]
         });
       }, error => {
         this.props.alert.show({

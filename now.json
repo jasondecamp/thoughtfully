@@ -1,7 +1,0 @@
-{
-  "env": {
-    "NODE_ENV": "production",
-    "REACT_APP_API_URL":"http://localhost:3000/api",
-    "PUBLIC_URL":"http://thoughtfully.test"
-  }
-}
