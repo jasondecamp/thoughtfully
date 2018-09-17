@@ -16,6 +16,10 @@ html, body, #root {
   height: 100%;
 }
 
+a {
+  color: white;
+}
+
 .modal-dialog {
   color: #212121;
   &.modal-full-height {
@@ -25,7 +29,6 @@ html, body, #root {
 
 button {
   transition: color 0.2s, background 0.2s, border 0.2s, border-radius 0.2s, width 0.2s, max-width 0.2s, all 0.2s;
-//  line-height: 20px;
   &.error {
     animation: 0.1s linear 3 vibrate;
   }

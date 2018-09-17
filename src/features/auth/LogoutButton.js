@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import Button from '@material-ui/core/Button';
 
 export class LogoutButton extends Component {
   static propTypes = {
@@ -12,9 +13,9 @@ export class LogoutButton extends Component {
 
   render() {
     return (
-      <a className="logout-button" onClick={this.props.actions.logout}>
+      <Button className="logout-button" onClick={this.props.actions.logout}>
         logout
-      </a>
+      </Button>
     );
   }
 }

@@ -4,7 +4,8 @@ export default class PageNotFound extends PureComponent {
   render() {
     return (
       <div className="core-page-not-found">
-        Page not found.
+        Page not found.<br/>
+        <a href="/">Back</a>
       </div>
     );
   }

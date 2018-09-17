@@ -81,9 +81,6 @@ class Dashboard extends Component {
         suggested:null
       });
     }
-
-    // TODO: tab, right arrow accepts auto-suggest.
-    // TODO: update copy about suggested selection
   }
 
   handleChange(event) {
@@ -116,7 +113,7 @@ class Dashboard extends Component {
             'Saving' : `Press enter to save${this.state.suggested ? ', or tab to select suggestion.' : '.'}`}
         </div>
         <div id="thought" className={this.getClasses()}>
-          { (Array.from(Array(80).keys())).map((i) => {
+          { (Array.from(Array(40).keys())).map((i) => {
             return (<div className="text" key={i}><div className="text_inner1"><div className="text_inner2">{this.state.thought}</div></div></div>)
           })}
           <div className="suggest">{this.state.suggested ? this.state.suggested.body : ''}</div>
