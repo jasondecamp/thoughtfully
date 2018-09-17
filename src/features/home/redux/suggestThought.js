@@ -22,7 +22,7 @@ export function suggestThought(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get('/thoughts?find=args.find',args);
+      const doRequest = axios.get('/thoughts',args);
       doRequest.then(
         (res) => {
           dispatch({
