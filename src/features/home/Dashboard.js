@@ -7,20 +7,22 @@ import TextareaAutosize from 'react-autosize-textarea';
 import Greeting from './Greeting'
 import LogoutButton from '../auth/LogoutButton';
 import Alerts from "../core/Alerts";
+import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
 const successMessages = [
-  'Sent to the void.',
-  'Thought archived.',
-  'Let it float away.',
+  'I didn\'t know I was a slave until I found out I couldn\'t do the things I wanted.',
+  'I had as well be killed running as die standing.',
+  'The soul that is within me no man can degrade.',
   'Forget the pain but never forget what it taught you.',
   'Life moves on and so should we.',
   'Courage is the power to let go of the familiar.',
-  'If there is no struggle, there is no progress.',
+  'Without struggle there can be no progress.',
   'What to the Slave is the 4th of July.',
   'Let us render the tyrant no aid.',
-  'I would unite with anybody to do right; and with nobody to do wrong.',
+  'I would unite with anybody to do right and with nobody to do wrong.',
   'You are not judged by the height you have risen, but from the depth you have climbed.',
   'Once you learn to read, you will be forever free.',
+  'A man is never lost while he still earnestly thinks himself worth saving.',
   'I prefer to be true to myself, even at the hazard of incurring the ridicule of others, rather than to be false, and to incur my own abhorrence.',
 ];
 
@@ -37,15 +39,16 @@ class Dashboard extends Component {
       thought: ''
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.getClasses = this.getClasses.bind(this);
+    this.suggestThought = AwesomeDebouncePromise(this.props.actions.suggestThought, 500);
   }
 
   componentDidMount() {
     this.textarea.focus();
   }
 
-  handleKeyPress(event) {
+  handleKeyDown(event) {
     if (event.key === 'Enter') {
       event.preventDefault();
       // validate
@@ -60,21 +63,37 @@ class Dashboard extends Component {
           this.textarea.focus();
         }, 700);
         this.props.alert.show({
-          message: successMessages[Math.floor(Math.random() * successMessages.length)]
+          message: successMessages[Math.floor(Math.random() * successMessages.length)],
+          delay: 8000
         });
       }, error => {
+        this.setState({error:true});
+        setTimeout(() => this.setState({error:false},300));
         this.props.alert.show({
           message: 'Uh oh! Technical Difficulties.'
         });
       });;
     }
-    // TODO: tab, right arrow, enter accepts auto-suggest.
+    else if (event.key === 'Tab') {
+      event.preventDefault();
+      if(this.state.suggested) this.setState({
+        thought:this.state.suggested.body,
+        suggested:null
+      });
+    }
+
+    // TODO: tab, right arrow accepts auto-suggest.
+    // TODO: update copy about suggested selection
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-    // TODO auto-suggest lookup
-    // TODO auto-suggest styling
+    let update = {[event.target.name]: event.target.value}
+    if(!event.target.value || (this.state.suggested && this.state.suggested.body.indexOf(event.target.value) !== 0)) 
+      update.suggested = '';
+    this.setState(update);
+    if(event.target.value) this.suggestThought({params:{find:event.target.value}}).then(result => {
+      this.setState({suggested:result});
+    },() => {});
   }
 
   getClasses() {
@@ -94,12 +113,13 @@ class Dashboard extends Component {
         </div>
         <div className={`hint ${this.state.thought === '' ? '' : 'active'}`}>
           {this.props.home.saveThoughtPending || this.state.clear ? 
-            'Saving' : 'Press enter to save.'}
+            'Saving' : `Press enter to save${this.state.suggested ? ', or tab to select suggestion.' : '.'}`}
         </div>
         <div id="thought" className={this.getClasses()}>
           { (Array.from(Array(80).keys())).map((i) => {
             return (<div className="text" key={i}><div className="text_inner1"><div className="text_inner2">{this.state.thought}</div></div></div>)
           })}
+          <div className="suggest">{this.state.suggested ? this.state.suggested.body : ''}</div>
           <div className="form-row">
             <TextareaAutosize 
               className="thought-input" 
@@ -107,7 +127,7 @@ class Dashboard extends Component {
               style={{ resize: 'none' }}
               disabled={this.props.home.saveThoughtPending}
               onChange={this.handleChange}
-              onKeyPress={this.handleKeyPress}
+              onKeyDown={this.handleKeyDown}
               value={this.state.thought} 
               innerRef={ref => this.textarea = ref}/>
             <span>click here</span>

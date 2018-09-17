@@ -38,9 +38,9 @@ export function saveThought(args = {}) {
         (err) => {
           dispatch({
             type: HOME_SAVE_THOUGHT_FAILURE,
-            data: { error: err },
+            data: { error: err.response ? err.response.data : err },
           });
-          reject(err);
+          reject(err.response ? err.response.data : err);
         },
       );
     });

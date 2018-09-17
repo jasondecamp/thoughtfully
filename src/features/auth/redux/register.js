@@ -36,9 +36,9 @@ export function register(args = {}) {
         (err) => {
           dispatch({
             type: AUTH_REGISTER_FAILURE,
-            data: { error: err.response.data },
+            data: { error: err.response ? err.response.data : err },
           });
-          reject(err.response.data);
+          reject(err.response ? err.response.data : err);
         },
       );
     });

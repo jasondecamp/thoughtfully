@@ -23,10 +23,23 @@ html, body, #root {
   }
 }
 
-.btn {
-  line-height: 20px;
+button {
+  transition: color 0.2s, background 0.2s, border 0.2s, border-radius 0.2s, width 0.2s, max-width 0.2s, all 0.2s;
+//  line-height: 20px;
   &.error {
     animation: 0.1s linear 3 vibrate;
+  }
+  &.loading, &.loading:hover {
+    cursor: default;
+    color: transparent;
+    width: 48px;
+    border-radius: 999em;
+    min-width: 48px;
+    padding: 0;
+    border: 2px solid #a53ff3;
+    background: transparent;
+    border-bottom-color: transparent;
+    animation: 0.75s linear infinite spin;
   }
 }
 
@@ -97,5 +110,13 @@ html, body, #root {
   }
   100% {
     transform: translateX(0);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

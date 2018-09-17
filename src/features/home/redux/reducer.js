@@ -1,8 +1,10 @@
 import initialState from './initialState';
 import { reducer as saveThoughtReducer } from './saveThought';
+import { reducer as suggestThoughtReducer } from './suggestThought';
 
 const reducers = [
   saveThoughtReducer,
+  suggestThoughtReducer,
 ];
 
 export default function reducer(state = initialState, action) {

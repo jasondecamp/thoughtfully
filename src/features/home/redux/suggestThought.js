@@ -1,18 +1,17 @@
 import axios from 'axios';
-import Auth from '../authService';
 import {
-  AUTH_LOGIN_BEGIN,
-  AUTH_LOGIN_SUCCESS,
-  AUTH_LOGIN_FAILURE,
-  AUTH_LOGIN_DISMISS_ERROR,
+  HOME_SUGGEST_THOUGHT_BEGIN,
+  HOME_SUGGEST_THOUGHT_SUCCESS,
+  HOME_SUGGEST_THOUGHT_FAILURE,
+  HOME_SUGGEST_THOUGHT_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function login(args = {}) {
+export function suggestThought(args = {}) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: AUTH_LOGIN_BEGIN,
+      type: HOME_SUGGEST_THOUGHT_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -23,11 +22,11 @@ export function login(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post('/login',args);
+      const doRequest = axios.get('/thoughts',args);;
       doRequest.then(
         (res) => {
           dispatch({
-            type: AUTH_LOGIN_SUCCESS,
+            type: HOME_SUGGEST_THOUGHT_SUCCESS,
             data: res.data.data[0],
           });
           resolve(res.data.data[0]);
@@ -35,10 +34,10 @@ export function login(args = {}) {
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: AUTH_LOGIN_FAILURE,
-            data: { error: err.response ? err.response.data : err },
+            type: HOME_SUGGEST_THOUGHT_FAILURE,
+            data: { error: err },
           });
-          reject(err.response ? err.response.data : err);
+          reject(err);
         },
       );
     });
@@ -49,49 +48,43 @@ export function login(args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissLoginError() {
+export function dismissSuggestThoughtError() {
   return {
-    type: AUTH_LOGIN_DISMISS_ERROR,
+    type: HOME_SUGGEST_THOUGHT_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case AUTH_LOGIN_BEGIN:
+    case HOME_SUGGEST_THOUGHT_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        loginPending: true,
-        loginError: null,
+        suggestThoughtPending: true,
+        suggestThoughtError: null,
       };
 
-    case AUTH_LOGIN_SUCCESS:
+    case HOME_SUGGEST_THOUGHT_SUCCESS:
       // The request is success
-      Auth.setSession(action.data);
       return {
         ...state,
-        access_token: action.data.access_token,
-        user: action.data.user,
-        loginPending: false,
-        loginError: null,
+        suggestThoughtPending: false,
+        suggestThoughtError: null,
       };
 
-    case AUTH_LOGIN_FAILURE:
+    case HOME_SUGGEST_THOUGHT_FAILURE:
       // The request is failed
-      Auth.setSession(false);
       return {
         ...state,
-        access_token: null,
-        user: false,
-        loginPending: false,
-        loginError: action.data.error,
+        suggestThoughtPending: false,
+        suggestThoughtError: action.data.error,
       };
 
-    case AUTH_LOGIN_DISMISS_ERROR:
+    case HOME_SUGGEST_THOUGHT_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        loginError: null,
+        suggestThoughtError: null,
       };
 
     default:

@@ -14,12 +14,16 @@
 - ~~Figure out deployment to now~~
 - ~~Build thought input UI~~
 - ~~Add snackbar alerts for user feedback~~
+- ~~Figure out NOW for UI deployment~~
+- ~~Finish Serverside API (https://github.com/jasondecamp/thoughtfully-api)~~
+- ~~Set up API deployment on heroku and integrate it with this client~~
 
 ## Work in progress
 - Clean-up signup/signin forms with loading and validation
-- Finish Serverside API (https://github.com/jasondecamp/thoughtfully-api)
+- Create favicon
 
 ## To do
+- Autosuggest typeahead implementation
 - Testing and debugging
 
 ### **---===> Launch v1.0**
@@ -38,3 +42,5 @@ $ npm run build
 $ cd build
 $ now --name thoughtfully --public
 $ now alias [clipboard] thoughtfully.app
+$ cd ..
+```

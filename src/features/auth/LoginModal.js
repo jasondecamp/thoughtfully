@@ -6,8 +6,8 @@ import * as actions from './redux/actions';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Alerts from "../core/Alerts";
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 class LoginModal extends Component {
   constructor(props) {
@@ -16,15 +16,12 @@ class LoginModal extends Component {
       username: '',
       email: '',
       password: '',
-      register: false
+      register: false,
+      submitted: false
     };
     this.toggleRegister = this.toggleRegister.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  validate(form) {
-    
   }
 
   toggleRegister(event) {
@@ -37,29 +34,44 @@ class LoginModal extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    event.target.className += ' was-validated'; 
-
-    if(event.target.checkValidity()) {
-      let action = this.state.register ? 'register' : 'login';
-      this.props.actions[action]({
-        email: this.state.email,
-        password: this.state.password,
-        username: this.state.username
-      }).then(res => {
-        let msg = action === 'login' ? 
-          `Hello again, ${res.user.username}!` : 
-          `Welcome, ${res.user.username}!`;
-        this.props.alert.show({message:msg});
-        this.props.onHide(true);
-      }, error => {
-        let msg = `Oops. Please double check and try again.`;
-        this.props.alert.show({message:msg});
-      });
-    } else {
-      this.setState({error:true});
-      setTimeout(() => this.setState({error: false}), 300);
-    }
+    this.setState({submitted:true}); 
+    let action = this.state.register ? 'register' : 'login';
+    this.props.actions[action]({
+      email: this.state.email,
+      password: this.state.password,
+      username: this.state.username
+    }).then(res => {
+      let msg = action === 'login' ? 
+        `Hello again, ${res.user.username}!` : 
+        `Welcome, ${res.user.username}!`;
+      this.props.alert.show({message:msg});
+      this.props.onHide(true);
+    }, error => {
+      let msg = this.getErrorMessage(error.meta.error);
+      this.props.alert.show({message:msg});
+    });
   }
+
+  handleError = () => {
+    this.setState({error:true});
+    setTimeout(() => this.setState({error: false}), 300);
+  }
+
+  getErrorMessage = (error) => {
+    if(this.state.register) {
+      switch(error.message) {
+        case 'Validation error':
+          if(error.details && error.details.email)
+            return `Must be a valid email address.`;
+          if(error.details && error.details.password)
+            return `Password must be at least 5 characters.`;
+          break;
+        default:
+          break;
+      }
+    } 
+    return `Oops. Please double check and try again.`;
+  };
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -74,15 +86,18 @@ class LoginModal extends Component {
           <a onClick={this.toggleRegister}>{ this.state.register ? '(already signed up?)' : '(not yet signed up?)'}</a>
         </h3>
         <div className="modal-body">
-          <form className="login-form" onSubmit={this.handleSubmit} noValidate id="loginForm">
-
-            <TextField fullWidth className="form-row" label="Username" name="username" 
+          <ValidatorForm className="login-form" id="loginForm" noValidate
+            onSubmit={this.handleSubmit} onError={this.handleError}>
+            <TextValidator fullWidth className="form-row" label="Username" name="username" 
+              validators={['required','matchRegexp:^[A-Za-z0-9]+$']} errorMessages={['required','only letters and numbers']}
               value={this.state.username} onChange={this.handleChange} />
             { this.state.register && 
-            <TextField fullWidth className="form-row" label="Email" name="email" 
+            <TextValidator fullWidth className="form-row" label="Email" name="email" 
+              validators={['required', 'isEmail']} errorMessages={['required', 'valid email required']}
               value={this.state.email} onChange={this.handleChange} />
             }
-            <TextField fullWidth className="form-row" label="Password" name="password" 
+            <TextValidator fullWidth className="form-row" label="Password" name="password" 
+              validators={['required', 'minStringLength:5']} errorMessages={['required', 'too short! (min 5)']}
               type="password" value={this.state.password} onChange={this.handleChange} />
             
             { false && 
@@ -92,15 +107,14 @@ class LoginModal extends Component {
               <Button type="button" color="white"><i className="fa fa-google"></i>Google</Button>
             </div>
             }
-            <p>
-            </p>
-          </form>
+          </ValidatorForm>
         </div>
         <div className="modal-footer">
           <Button onClick={this.props.onHide}>Cancel</Button>{' '}
           <Button type="submit" form="loginForm" 
             className={classNames('purple-gradient',{
-              'error': this.state.error, 'loading': this.state.loading 
+              'error': this.state.error, 
+              'loading': this.props.auth.registerPending ||  this.props.auth.loginPending
             })}>{ this.state.register ? 'Sign up' : 'Sign in'}</Button>
         </div>
       </Drawer>

@@ -2,6 +2,12 @@
 
 .app-content {
   color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 50px;
   .logout-button {
     position: absolute;
     top: 25px;
@@ -12,7 +18,7 @@
     position: absolute;
     text-align: center;
     width: 100%;
-    left: 0;    
+    left: 0;
   }
   .greeting {
     top: 5%;
@@ -42,16 +48,33 @@
 }
 // Please change your favorite font-size!
 $fontSize: 48px;
-
 #thought {
-  position: fixed;
-  top: 50px;
-  left: 50px;
-  width: calc(100% - 100px);
-  height: calc(100% - 100px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 800px;
+  transform: translate3d(-50%, -50%, 0);
+  .text, .suggest {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .suggest {
+    top: auto;
+    bottom: -20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .text, .thought-input {
     font-size: $fontSize;
     line-height: $fontSize;
+    min-height: $fontSize;
     font-family: 'roboto', cursive;
     font-weight: 300;
     mix-blend-mode: screen;
@@ -68,10 +91,8 @@ $fontSize: 48px;
     caret-color: #fff;
     display: block;
     width: 100%;
-    min-height: $fontSize + 6px;
     background: transparent;
     padding: 0;
-    margin-top: 6px;
     border: none;
     outline: none;
     & + span {
@@ -85,18 +106,6 @@ $fontSize: 48px;
     &:not(:focus):empty + span {
       transition: opacity 0.3s 0.5s;
       opacity: 1;
-    }
-  }
-  .text, .form-row {
-    position: absolute;
-    transform: translate3d(-50%, -50%, 0);
-    overflow: visible;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    max-width: 800px;
-    &:before, &:after {
-      content: none;
     }
   }
   .text {
@@ -133,9 +142,9 @@ $fontSize: 48px;
       @for $i from 1 through 80 {
         &:nth-child(#{$i}) {
           @if random(2) > 1 {
-            animation: spin random(2000) + 1700ms linear 0ms infinite;
+            animation: spinText random(2000) + 1700ms linear 0ms infinite;
           } @else {
-            animation: spin random(2000) + 1700ms linear 0ms infinite reverse;
+            animation: spinText random(2000) + 1700ms linear 0ms infinite reverse;
           }
         }
       }
@@ -174,12 +183,9 @@ $fontSize: 48px;
     transform: translateY(-1px);
   }
 }
-@keyframes spin {
+@keyframes spinText {
   0% {
     transform: rotate(0deg) translate3d(-50%,-50%,0);
-  }
-  50% {
-    transform: rotate(180deg) translate3d(-50%,-50%,0);
   }
   100% {
     transform: rotate(360deg) translate3d(-50%,-50%,0);
