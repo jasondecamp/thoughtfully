@@ -67,6 +67,10 @@ class LoginModal extends Component {
             return `Password must be at least 5 characters.`;
           break;
         default:
+          if(error.message.includes('users_email_unique'))
+            return `This user email is already registered.`;
+          if(error.message.includes('users_username_unique'))
+            return `This username is already registered.`;
           break;
       }
     } 
