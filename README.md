@@ -17,23 +17,24 @@
 - ~~Figure out NOW for UI deployment~~
 - ~~Finish Serverside API (https://github.com/jasondecamp/thoughtfully-api)~~
 - ~~Set up API deployment on heroku and integrate it with this client~~
+- ~~Clean-up signup/signin forms with loading and validation~~
+- ~~Create favicon~~
+- ~~Autosuggest typeahead implementation~~
+- ~~Testing and debugging~~
+- ~~**---===> Launch v1.0**~~
 
 ## Work in progress
-- Clean-up signup/signin forms with loading and validation
-- Create favicon
+- Create account screen
 
 ## To do
-- Autosuggest typeahead implementation
-- Testing and debugging
-
-### **---===> Launch v1.0**
-
-## Future
-- Support social login via facebook and google
 - User preferences screen
   - Update email address
   - Control email frequency
   - Delete previous data (for privacy or whatever)
+
+
+## Future
+- Support social login via facebook and google
   
   
 ## DEPLOY VIA NOW
