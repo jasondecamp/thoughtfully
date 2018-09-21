@@ -24,7 +24,7 @@ export function saveThought(args = {}) {
       // args.error here is only for test coverage purpose.
       const doRequest = axios.post('/thoughts',args);
       const minTime = new Promise(function(resolve, reject) {
-        setTimeout(resolve, 1500);
+        setTimeout(resolve, 200);
       });
       Promise.all([doRequest,minTime]).then(
         (res) => {

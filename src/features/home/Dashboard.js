@@ -85,7 +85,7 @@ class Dashboard extends Component {
 
   handleChange(event) {
     let update = {[event.target.name]: event.target.value}
-    if(!event.target.value || (this.state.suggested && this.state.suggested.body.indexOf(event.target.value) !== 0)) 
+    if(!event.target.value || (this.state.suggested && this.state.suggested.body.indexOf(event.target.value) !== 0))
       update.suggested = '';
     this.setState(update);
     if(event.target.value) this.suggestThought({params:{find:event.target.value}}).then(result => {
@@ -109,27 +109,27 @@ class Dashboard extends Component {
           Type your random thoughts below.
         </div>
         <div className={`hint ${this.state.thought === '' ? '' : 'active'}`}>
-          {this.props.home.saveThoughtPending || this.state.clear ? 
+          {this.props.home.saveThoughtPending || this.state.clear ?
             'Saving' : `Press enter to save${this.state.suggested ? ', or tab to select suggestion.' : '.'}`}
         </div>
         <div id="thought" className={this.getClasses()}>
-          { (Array.from(Array(40).keys())).map((i) => {
+          { (Array.from(Array(80).keys())).map((i) => {
             return (<div className="text" key={i}><div className="text_inner1"><div className="text_inner2">{this.state.thought}</div></div></div>)
           })}
           <div className="suggest">{this.state.suggested ? this.state.suggested.body : ''}</div>
           <div className="form-row">
-            <TextareaAutosize 
-              className="thought-input" 
+            <TextareaAutosize
+              className="thought-input"
               name="thought"
               style={{ resize: 'none' }}
               disabled={this.props.home.saveThoughtPending}
               onChange={this.handleChange}
               onKeyDown={this.handleKeyDown}
-              value={this.state.thought} 
+              value={this.state.thought}
               innerRef={ref => this.textarea = ref}/>
             <span>click here</span>
           </div>
-        </div> 
+        </div>
       </div>
     );
   }
