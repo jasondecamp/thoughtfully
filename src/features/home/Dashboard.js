@@ -76,10 +76,7 @@ class Dashboard extends Component {
     }
     else if (event.key === 'Tab') {
       event.preventDefault();
-      if(this.state.suggested) this.setState({
-        thought:this.state.suggested.body,
-        suggested:null
-      });
+      this.selectSuggested();
     }
   }
 
@@ -91,6 +88,13 @@ class Dashboard extends Component {
     if(event.target.value) this.suggestThought({params:{find:event.target.value}}).then(result => {
       this.setState({suggested:result});
     },() => {});
+  }
+
+  selectSuggested = () => {
+    if(this.state.suggested) this.setState({
+      thought:this.state.suggested.body,
+      suggested:null
+    });
   }
 
   getClasses() {
@@ -116,7 +120,8 @@ class Dashboard extends Component {
           { (Array.from(Array(80).keys())).map((i) => {
             return (<div className="text" key={i}><div className="text_inner1"><div className="text_inner2">{this.state.thought}</div></div></div>)
           })}
-          <div className="suggest">{this.state.suggested ? this.state.suggested.body : ''}</div>
+          { this.state.suggested && (
+          <div className="suggest" onClick={this.selectSuggested}>{this.state.suggested ? this.state.suggested.body : ''}</div>)}
           <div className="form-row">
             <TextareaAutosize
               className="thought-input"

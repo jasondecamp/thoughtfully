@@ -179,9 +179,6 @@ $fontSize: 48px;
       opacity: 0;
       filter: blur(50px);
       color: #fff !important;
-      .text_inner1, .text_inner2 {
-        animation: none;
-      }
       @for $i from 1 through ($rowCount * $colCount * $levelCount) {
         &:nth-child(#{$i}) {
           @if random(2) > 1 {
