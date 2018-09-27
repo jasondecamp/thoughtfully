@@ -16,25 +16,20 @@ class LoginModal extends Component {
       username: '',
       email: '',
       password: '',
-      register: false,
-      submitted: false
+      register: false
     };
-    this.toggleRegister = this.toggleRegister.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  toggleRegister(event) {
+  toggleRegister = (event) => {
     this.setState({register:!this.state.register});
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({submitted:true}); 
     let action = this.state.register ? 'register' : 'login';
     this.props.actions[action]({
       email: this.state.email,
@@ -84,7 +79,7 @@ class LoginModal extends Component {
 
   render() {
     return (
-      <Drawer anchor="right" open={this.props.show} onClose={this.props.onHide} className="modal-login" classes={{paper:'modal-content'}}>
+      <Drawer anchor="right" open={this.props.show} onClose={this.props.onHide} className="modal modal-login" classes={{paper:'modal-content'}}>
         <h3 className="modal-header">
           {this.state.register ? 'Register' : 'Sign in'}
           <a onClick={this.toggleRegister}>{ this.state.register ? '(already signed up?)' : '(not yet signed up?)'}</a>
@@ -103,7 +98,10 @@ class LoginModal extends Component {
             <TextValidator fullWidth className="form-row" label="Password" name="password" 
               validators={['required', 'minStringLength:5']} errorMessages={['required', 'too short! (min 5)']}
               type="password" value={this.state.password} onChange={this.handleChange} />
-            
+            { !this.state.register && 
+            <div className="forgot"><a onClick={this.props.onForgotPassword}>forgot?</a></div>
+            }
+
             { false && 
             <div className="social">
               <p className="divider"><span>or</span></p>

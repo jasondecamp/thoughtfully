@@ -10,11 +10,17 @@ import initialState from './initialState';
 import { reducer as loginReducer } from './login';
 import { reducer as logoutReducer } from './logout';
 import { reducer as registerReducer } from './register';
+import { reducer as forgotPasswordReducer } from './forgotPassword';
+import { reducer as validateTokenReducer } from './validateToken';
+import { reducer as resetPasswordReducer } from './resetPassword';
 
 const reducers = [
   loginReducer,
   logoutReducer,
   registerReducer,
+  forgotPasswordReducer,
+  validateTokenReducer,
+  resetPasswordReducer,
 ];
 
 export default function reducer(state = initialState, action) {

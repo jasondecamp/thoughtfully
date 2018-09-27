@@ -15,7 +15,13 @@ const initialState = {
   registerPending: false,
   registerError: null,
   access_token: Auth.isAuthenticated(),
-  user: JSON.parse(localStorage.getItem('user') || false)
+  user: JSON.parse(localStorage.getItem('user') || false),
+  forgotPasswordPending: false,
+  forgotPasswordError: null,
+  validateTokenPending: false,
+  validateTokenError: null,
+  resetPasswordPending: false,
+  resetPasswordError: null
 };
 
 export default initialState;

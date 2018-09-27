@@ -6,6 +6,7 @@ import * as actions from './redux/actions';
 import Intro from './Intro';
 import Dashboard from './Dashboard';
 import LoginModal from '../auth/LoginModal';
+import ForgotPasswordModal from '../auth/ForgotPasswordModal';
 
 export class LandingPage extends Component {
   static propTypes = {
@@ -17,21 +18,27 @@ export class LandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginModal: false
+      loginModal: false,
+      forgotPasswordModal: false
     };
   }
 
+  handleForgotPassword = () => {
+    this.setState({ loginModal: false, forgotPasswordModal: true });
+  };
+
   render() {
-    let toggle = () => this.setState({ loginModal: !this.state.loginModal});
     return (
       <div className="home-landing-page">
         {(!this.props.auth || !this.props.auth.user) &&
-        <Intro login={toggle}/>
+        <Intro login={() => this.setState({ loginModal: true })}/>
         }
         {this.props.auth && this.props.auth.user &&
         <Dashboard user={this.props.auth.user}/>
         }
-        <LoginModal show={this.state.loginModal} onHide={toggle}/>
+        <LoginModal show={this.state.loginModal} onHide={() => this.setState({ loginModal: false})}
+          onForgotPassword={this.handleForgotPassword}/>
+        <ForgotPasswordModal show={this.state.forgotPasswordModal} onHide={() => this.setState({ forgotPasswordModal: false})}/>
       </div>
     );
   }
