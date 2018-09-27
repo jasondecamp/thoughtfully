@@ -1,0 +1,12 @@
+{
+  "name": "thoughtfully",
+  "alias": "thoughtfully.app",
+  "public": true,
+  "type": "static",
+  "static": {
+    "rewrites": [{
+      "source": "**",
+      "destination": "/index.html"
+    }]
+  }
+}

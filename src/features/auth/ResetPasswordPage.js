@@ -61,7 +61,10 @@ export class ResetPasswordPage extends Component {
         </span>
         }
         { this.state.status === 'invalid' &&
-        <span>Oops, looks like an invalid link. Please try again or request a new one if this issue persists.</span>
+        <div>
+          <h2>Oops!</h2>
+          <p>Looks like an invalid link. Please try again or request a new one if you keep seeing this error.</p>
+        </div>
         }
         { this.state.status === 'ready' &&
         <ValidatorForm className="reset-form" id="resetForm" noValidate

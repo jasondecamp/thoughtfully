@@ -42,7 +42,8 @@ class LoginModal extends Component {
       this.props.alert.show({message:msg});
       this.props.onHide(true);
     }, error => {
-      let msg = this.getErrorMessage(error.meta.error);
+      let msg = (error && error.meta && error.meta.error) ? this.getErrorMessage(error.meta.error) :
+        `Uh Oh. Technical difficulties.`;
       this.props.alert.show({message:msg});
     });
   }

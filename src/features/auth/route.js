@@ -3,7 +3,7 @@ import { ResetPasswordPage } from './';
 // Learn more from: http://rekit.js.org/docs/routing.html
 
 export default {
-  path: 'auth',
+  path: '',
   name: 'auth',
   childRoutes: [
     { path: '/reset/:token', name: 'Reset password page', component: ResetPasswordPage },
