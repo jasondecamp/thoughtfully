@@ -40,8 +40,6 @@
 ## DEPLOY VIA NOW
 ```
 $ npm run build
-$ cd build
-$ now --name thoughtfully --public
+$ now build --name thoughtfully --public
 $ now alias [clipboard] thoughtfully.app
-$ cd ..
 ```
