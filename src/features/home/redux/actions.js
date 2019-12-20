@@ -1,2 +1,2 @@
-export { saveThought, dismissSaveThoughtError } from './saveThought';
-export { suggestThought, dismissSuggestThoughtError } from './suggestThought';
+export { saveThought } from './saveThought';
+export { suggestThought } from './suggestThought';

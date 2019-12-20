@@ -68,7 +68,7 @@ class Dashboard extends Component {
         });
       }, error => {
         this.setState({error:true});
-        setTimeout(() => this.setState({error:false},300));
+        setTimeout(() => this.setState({error:false}),300);
         this.props.alert.show({
           message: 'Uh oh! Technical Difficulties.'
         });
